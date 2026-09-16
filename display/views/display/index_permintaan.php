@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SIMBADA - MONITORING</title>
+
+
+	<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/favicon.ico">
+	<style type="text/css">
+		body {
+			margin: 0px;
+			padding: 0px;
+			font-family: arial;
+			background: rgba(46,78,132,1);			
+		}
+
+		.header {
+			width: 100%;
+			height: 100px;			
+		}
+
+		.header_logo {
+			margin: 20px 0 0 20px;
+		}
+
+		.header_title {
+			float:right;
+			color: #FFF;
+			font-size: 38px;
+			font-weight: bold;
+			padding: 30px 20px 0 0;
+		}
+
+		.table_data {
+			width: 100%;
+		}
+
+		.table_data th {
+			text-align: center;
+			color:#FFF;
+			border-top: 1px #0A204F solid;
+			border-bottom: 1px #0A204F solid;	
+			padding: 10px;
+			font-size:16px;
+			background-color: #213C71;
+		}
+
+		.table_data td {
+			font-size:20px;
+			color: #C0D5F5;
+			padding: 10px 0px 10px 0px;
+		}
+
+		.tr_color {
+			background-color: #4B6396;
+		}
+
+		.td_center {
+			text-align: center;
+		}
+
+		/* vertical marquee */
+		.container {
+		    width: 100%;
+		    height: 900px;
+		    overflow: hidden;
+		    position: relative;
+		    box-sizing: border-box;
+		}
+
+		.marquee {
+		    top: 6em;
+		    position: relative;
+		    box-sizing: border-box;
+		    animation: marquee 50s linear infinite;
+		}
+
+		.marquee:hover {
+		    animation-play-state: paused
+		}
+
+		/* Make it move! */
+		@keyframes marquee {
+		    0%   { top:   0em }
+		    100% { top: -25em }
+		}
+		
+	</style>
+
+	<script src="<?php echo base_url(); ?>assets/libs/jquery.min.js"></script>
+</head>
+<body>
+	<div class="header">
+		<div class="header_title">SIMBADA - MONITORING PERMINTAAN</div>
+		<div class="header_logo">
+			<img src="<?php echo base_url(); ?>assets/img/theme/logo-kaltim-white.png" width="250px">
+		</div>		
+	</div>
+	<div class="frame_data">
+		<table class="table_data" cellspacing="0" cellpadding="3px" border="0">
+			<tr>
+				<th width="300px">NOMOR PERMINTAAN</th>
+				<th width="500px">NAMA PERMINTAAN</th>
+				<th width="300px">TGL PERMINTAAN</th>
+				<th width="300px">TGL APPROVE PIMPINAN</th>
+				<th width="300px">TGL APPROVE PERIKSA PERMINTAAN</th>
+			</tr>
+		</table>
+		<div id="content_table"class="container">
+			<div class="tr_color">
+				<div class="td_center">Tidak ada data yang ditampilkan</td>
+			</div>
+		</div>					
+	</div>
+
+<script type="text/javascript">
+	$(function(){
+        show_data();
+
+        setInterval(function(){
+        	show_loading();
+	        $.get('<?php echo base_url(); ?>display/data_permintaan', function(data) {
+	            $('#content_table').html(data);
+	        });
+        }, 1800000);
+    });
+
+    function show_loading() {
+        $('#content_table').html('<tr class="tr_color"><td class="td_center" colspan="5">loading...</td></tr>');
+    }
+
+    function show_data() {     
+        show_loading();
+        $.get('<?php echo base_url(); ?>display/data_permintaan', function(data) {
+            $('#content_table').html(data);
+        });
+    }  
+</script>
+
+</body>
+</html>
